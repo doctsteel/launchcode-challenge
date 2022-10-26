@@ -1,11 +1,18 @@
-import { ConflictException, Injectable } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateUserCredsDto } from './DTO/create-user-creds.dto';
 import * as bcrypt from 'bcrypt';
 import { Prisma } from '@prisma/client';
+import { LogInUserDTO } from './DTO/log-in-user.dto';
+import { JwtService } from '@nestjs/jwt';
+
 @Injectable()
 export class AuthService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private prisma: PrismaService, private jwtService: JwtService) {}
 
   async createUser(data: CreateUserCredsDto): Promise<void> {
     const { username, password, role } = data;
@@ -28,6 +35,21 @@ export class AuthService {
         }
       }
       throw error;
+    }
+  }
+
+  async logIn(userInfo: LogInUserDTO): Promise<{ accessToken: string }> {
+    const { username, password } = userInfo;
+    const user = await this.prisma.user.findFirst({
+      where: { username: username },
+    });
+
+    if (user && (await bcrypt.compare(password, user.password))) {
+      const payload = { username };
+      const accessToken = await this.jwtService.sign(payload);
+      return { accessToken };
+    } else {
+      throw new UnauthorizedException('wrong user or password.');
     }
   }
 }

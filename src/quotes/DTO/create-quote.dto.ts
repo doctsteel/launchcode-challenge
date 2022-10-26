@@ -28,7 +28,4 @@ export class CreateQuoteDTO {
 
   @IsNotEmpty()
   readonly price: number;
-
-  @IsNotEmpty()
-  readonly userId: string;
 }

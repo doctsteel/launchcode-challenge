@@ -6,22 +6,27 @@ import {
   Param,
   Patch,
   Post,
+  UseGuards,
 } from '@nestjs/common';
-import { Quote } from '@prisma/client';
+import { AuthGuard } from '@nestjs/passport';
+import { Quote, User } from '@prisma/client';
+import { GetUser } from 'src/auth/get-user.decorator';
 import { CreateQuoteDTO } from './DTO/create-quote.dto';
 import { GetQuotesFilterSearchDTO } from './DTO/get-quotes-filter-search.dto';
+import { QuotePaginationDTO } from './DTO/quote-pagination.dto';
 import { UpdateQuoteDTO } from './DTO/update-quote.dto';
 
 import { QuotesService } from './quotes.service';
 
 @Controller('quotes')
+@UseGuards(AuthGuard())
 export class QuotesController {
   constructor(private quotesService: QuotesService) {}
 
-  // @Get()
-  // getAllQuotes(): Quote[] {
-  //   return this.quotesService.getAllQuotes();
-  // }
+  @Get()
+  async getAllQuotes(@Body() pageInfo: QuotePaginationDTO): Promise<Quote[]> {
+    return this.quotesService.getAllQuotes(pageInfo);
+  }
 
   @Get('/:id')
   async getQuoteById(@Param('id') id: string): Promise<Quote> {
@@ -29,8 +34,11 @@ export class QuotesController {
   }
 
   @Post()
-  async createQuote(@Body() quoteData: CreateQuoteDTO): Promise<Quote> {
-    return await this.quotesService.createQuote(quoteData);
+  async createQuote(
+    @Body() quoteData: CreateQuoteDTO,
+    @GetUser() user: User,
+  ): Promise<Quote> {
+    return await this.quotesService.createQuote(quoteData, user);
   }
 
   @Delete('/:id')

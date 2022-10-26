@@ -29,9 +29,9 @@ model Quote {
   contact_info    String
   status          QuoteStatus
   price           Int
-  userId          String
   created_at      DateTime        @default(now())
   user            User            @relation(fields: [userId], references: [id])
+  userId          String
 
   @@map("quotes")
 }

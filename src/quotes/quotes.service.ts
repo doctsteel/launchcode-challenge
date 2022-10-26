@@ -1,19 +1,21 @@
 import { Injectable } from '@nestjs/common';
-import { Quote } from '@prisma/client';
+import { Quote, User } from '@prisma/client';
 import { CreateQuoteDTO } from './DTO/create-quote.dto';
 import { UpdateQuoteDTO } from './DTO/update-quote.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { QuotePaginationDTO } from './DTO/quote-pagination.dto';
 
 @Injectable()
 export class QuotesService {
   constructor(private prisma: PrismaService) {}
 
-  async getAllQuotes(): Promise<Quote[]> {
-    return this.prisma.quote.findMany();
+  async getAllQuotes(pagination: QuotePaginationDTO): Promise<Quote[]> {
+    const { skip, take } = pagination;
+    return this.prisma.quote.findMany({ skip, take });
   }
 
-  async createQuote(data: CreateQuoteDTO): Promise<Quote> {
-    return this.prisma.quote.create({ data });
+  async createQuote(data: CreateQuoteDTO, user: User): Promise<Quote> {
+    return this.prisma.quote.create({ data: { ...data, userId: user.id } });
   }
 
   async getQuoteById(id: string): Promise<Quote | null> {
