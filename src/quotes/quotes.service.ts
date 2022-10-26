@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { Quote, User } from '@prisma/client';
 import { CreateQuoteDTO } from './DTO/create-quote.dto';
 import { UpdateQuoteDTO } from './DTO/update-quote.dto';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { PrismaService } from '../prisma/prisma.service';
 import { QuotePaginationDTO } from './DTO/quote-pagination.dto';
 
 @Injectable()

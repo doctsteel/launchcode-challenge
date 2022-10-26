@@ -3,14 +3,16 @@ import {
   Controller,
   Delete,
   Get,
+  Logger,
   Param,
   Patch,
   Post,
   UseGuards,
 } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { AuthGuard } from '@nestjs/passport';
 import { Quote, User } from '@prisma/client';
-import { GetUser } from 'src/auth/get-user.decorator';
+import { GetUser } from '../auth/get-user.decorator';
 import { CreateQuoteDTO } from './DTO/create-quote.dto';
 import { GetQuotesFilterSearchDTO } from './DTO/get-quotes-filter-search.dto';
 import { QuotePaginationDTO } from './DTO/quote-pagination.dto';
@@ -21,6 +23,7 @@ import { QuotesService } from './quotes.service';
 @Controller('quotes')
 @UseGuards(AuthGuard())
 export class QuotesController {
+  private logger = new Logger('QuotesController');
   constructor(private quotesService: QuotesService) {}
 
   @Get()
