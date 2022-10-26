@@ -58,16 +58,22 @@ $ npm run test:e2e
 $ npm run test:cov
 ```
 
-## Support
+## atualizou scheme.prisma?
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+faz o migrate:
 
-## Stay in touch
+```
+$ npx prisma migrate dev --name nome_da_migration
+```
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+faz o prisma db pull pra atualizar o prisma client
 
-## License
+```
+$ npx prisma db pull
+```
 
-Nest is [MIT licensed](LICENSE).
+faz o prisma generate
+
+```
+$ npx prisma generate
+```

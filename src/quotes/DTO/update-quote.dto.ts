@@ -1,5 +1,5 @@
 import { IsEnum } from 'class-validator';
-import { ContactInfo, TransportMethod } from '../quotes.model';
+import { QuoteStatus, TransportMethod } from '@prisma/client';
 
 export class UpdateQuoteDTO {
   departure_loc?: string;
@@ -9,6 +9,10 @@ export class UpdateQuoteDTO {
   traveler_qty?: number;
 
   @IsEnum(TransportMethod)
+  status?: QuoteStatus;
+
+  @IsEnum(TransportMethod)
   transportation?: TransportMethod;
-  contact_info?: ContactInfo;
+
+  contact_info?: string;
 }

@@ -1,5 +1,5 @@
 import { IsOptional } from 'class-validator';
-import { ContactInfo, TransportMethod } from '../quotes.model';
+import { QuoteStatus, TransportMethod } from '@prisma/client';
 
 export class GetQuotesFilterSearchDTO {
   @IsOptional()
@@ -12,5 +12,5 @@ export class GetQuotesFilterSearchDTO {
   transportation?: TransportMethod;
 
   @IsOptional()
-  contact_info?: ContactInfo;
+  status: QuoteStatus;
 }

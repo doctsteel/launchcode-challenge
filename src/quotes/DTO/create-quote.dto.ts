@@ -1,25 +1,34 @@
+import { QuoteStatus, TransportMethod } from '@prisma/client';
 import { IsNotEmpty } from 'class-validator';
-import { ContactInfo, TransportMethod } from '../quotes.model';
 
 export class CreateQuoteDTO {
   @IsNotEmpty()
-  departure_loc: string;
+  readonly departure_loc: string;
 
   @IsNotEmpty()
-  destination_loc: string;
+  readonly destination_loc: string;
 
   @IsNotEmpty()
-  departure_date: Date;
+  readonly departure_date: Date;
 
   @IsNotEmpty()
-  return_date: Date;
+  readonly return_date: Date;
 
   @IsNotEmpty()
-  traveler_qty: number;
+  readonly traveler_qty: number;
 
   @IsNotEmpty()
-  transportation: TransportMethod;
+  readonly transportation: TransportMethod;
 
   @IsNotEmpty()
-  contact_info: ContactInfo;
+  readonly contact_info: string;
+
+  @IsNotEmpty()
+  readonly status: QuoteStatus;
+
+  @IsNotEmpty()
+  readonly price: number;
+
+  @IsNotEmpty()
+  readonly userId: string;
 }
