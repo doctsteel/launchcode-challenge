@@ -15,10 +15,6 @@ export class CreateUserCredsDto {
   username: string;
 
   @IsString()
-  @IsNotEmpty()
-  email: string;
-
-  @IsString()
   @MinLength(8, { message: 'password too small!' })
   @IsNotEmpty()
   password: string;
