@@ -77,3 +77,5 @@ faz o prisma generate
 ```
 $ npx prisma generate
 ```
+
+cria .env.stage.dev e .env.stage.prod
