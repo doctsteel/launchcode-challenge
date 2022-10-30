@@ -4,18 +4,40 @@ import { CreateQuoteDTO } from './DTO/create-quote.dto';
 import { UpdateQuoteDTO } from './DTO/update-quote.dto';
 import { PrismaService } from '../prisma/prisma.service';
 import { QuotePaginationDTO } from './DTO/quote-pagination.dto';
+import { DateNormalizer } from '../utils/datenormalizer';
 
 @Injectable()
 export class QuotesService {
   constructor(private prisma: PrismaService) {}
 
-  async getAllQuotes(pagination: QuotePaginationDTO): Promise<Quote[]> {
+  async getPaginatedQuotes(
+    pagination: QuotePaginationDTO,
+  ): Promise<{ rows: Quote[]; pageCount: number; rowCount: number }> {
     const { skip, take } = pagination;
-    return this.prisma.quote.findMany({ skip, take });
+
+    const query = await this.prisma.quote.findMany({
+      skip: Number(pagination.skip),
+      take: Number(pagination.take),
+    });
+
+    const count = await this.prisma.quote.count();
+    const res = {
+      rows: query,
+      pageCount: (skip + take) / take,
+      rowCount: count,
+    };
+    return res;
   }
 
   async createQuote(data: CreateQuoteDTO, user: User): Promise<Quote> {
-    return this.prisma.quote.create({ data: { ...data, userId: user.id } });
+    const normalizedQuote = {
+      ...data,
+      userId: user.id,
+      departure_date: DateNormalizer(data.departure_date),
+      return_date: DateNormalizer(data.return_date),
+      traveler_qty: Number(data.traveler_qty),
+    };
+    return this.prisma.quote.create({ data: normalizedQuote });
   }
 
   async getQuoteById(id: string): Promise<Quote | null> {

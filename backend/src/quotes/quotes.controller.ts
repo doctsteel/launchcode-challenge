@@ -7,6 +7,7 @@ import {
   Param,
   Patch,
   Post,
+  Query,
   UseGuards,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
@@ -26,9 +27,12 @@ export class QuotesController {
   private logger = new Logger('QuotesController');
   constructor(private quotesService: QuotesService) {}
 
-  @Get()
-  async getAllQuotes(@Body() pageInfo: QuotePaginationDTO): Promise<Quote[]> {
-    return this.quotesService.getAllQuotes(pageInfo);
+  @Get('/?')
+  async getAllQuotes(
+    @Query('skip') skip: number,
+    @Query('take') take: number,
+  ): Promise<{ rows: Quote[]; pageCount: number; rowCount: number }> {
+    return await this.quotesService.getPaginatedQuotes({ skip, take });
   }
 
   @Get('/:id')

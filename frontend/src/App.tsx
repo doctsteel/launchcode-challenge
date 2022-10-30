@@ -1,19 +1,13 @@
-import { Box, HStack, Stack } from "@chakra-ui/react";
-import * as React from "react";
-import MainContainer from "./component/MainContainer/MainContainer";
-import NavBar from "./component/Navbar/NavBar";
-import MySideBar from "./component/Sidebar/MySideBar";
+import React from "react";
+import Routes from "./routes";
+import BaseScreen from "./screens/Base";
 
 export const App = () => {
   return (
     <div className="App" style={{ background: "#EDF0F9" }}>
-      <NavBar />
-      <Box h="100vh">
-        <HStack>
-          <MySideBar />
-          <MainContainer />
-        </HStack>
-      </Box>
+      <BaseScreen>
+        <Routes />
+      </BaseScreen>
     </div>
   );
 };

@@ -14,11 +14,11 @@ const queryClient = new QueryClient();
 root.render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
-      <BrowserRouter>
-        <ChakraProvider>
+      <ChakraProvider>
+        <BrowserRouter>
           <App />
-        </ChakraProvider>
-      </BrowserRouter>
+        </BrowserRouter>
+      </ChakraProvider>
     </QueryClientProvider>
   </React.StrictMode>
 );

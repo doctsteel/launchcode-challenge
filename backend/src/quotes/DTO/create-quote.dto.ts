@@ -9,10 +9,10 @@ export class CreateQuoteDTO {
   readonly destination_loc: string;
 
   @IsNotEmpty()
-  readonly departure_date: Date;
+  readonly departure_date: string;
 
   @IsNotEmpty()
-  readonly return_date: Date;
+  readonly return_date: string;
 
   @IsNotEmpty()
   readonly traveler_qty: number;

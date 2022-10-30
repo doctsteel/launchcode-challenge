@@ -12,8 +12,8 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Field, FormikProvider, useFormik } from "formik";
 import React from "react";
 
-import { CreateQuoteDTO } from "../../../../services/DTO/create-quote.dto";
-import QuotesService from "../../../../services/quotes.service";
+import { CreateQuoteDTO } from "../../services/DTO/create-quote.dto";
+import QuotesService from "../../services/quotes.service";
 
 const SelectLocation = () => {
   return (
@@ -30,7 +30,7 @@ const SelectTransportation = () => {
     <>
       <option value="CAR">Car</option>
       <option value="PLANE">Plane</option>
-      <option value="TELEPORT">Teletransport</option>
+      <option value="TELETRANSPORT">Teletransport</option>
     </>
   );
 };
@@ -48,8 +48,6 @@ const emptyForms = {
 const CreateQuoteCard = () => {
   const toast = useToast();
   const quotesService = new QuotesService();
-
-  const queryClient = useQueryClient();
   const newQuoteMutation = useMutation(async (newQuote: CreateQuoteDTO) => {
     quotesService.createQuote(newQuote);
     //return queryClient.invalidateQueries(["quotes"]);
@@ -113,7 +111,7 @@ const CreateQuoteCard = () => {
           </GridItem>
           <GridItem>
             <FormControl>
-              <FormLabel htmlFor="email">Departure date</FormLabel>
+              <FormLabel>Departure date</FormLabel>
               <Field
                 as={Input}
                 placeholder="DEPART DATE"
@@ -128,7 +126,6 @@ const CreateQuoteCard = () => {
           <GridItem>
             <Field
               as={Input}
-              label="return date"
               placeholder="RETURN DATE"
               id="return_date"
               name="return_date"

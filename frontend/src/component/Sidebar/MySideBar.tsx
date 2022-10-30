@@ -25,8 +25,8 @@ const MySideBar = () => {
 };
 
 const SideBarContent = [
-  { route: "/", name: "Home", icon: FiHome },
-  { route: "/test", name: "Quotes", icon: FiHome },
+  { route: "/home", name: "Home", icon: FiHome },
+  { route: "/quotes", name: "Quotes", icon: FiHome },
   { route: "/", name: "Leads", icon: FiHome },
   { route: "/", name: "Tours", icon: FiHome },
   { route: "/", name: "Invoices", icon: FiHome },
