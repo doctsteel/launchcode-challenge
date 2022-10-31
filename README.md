@@ -21,7 +21,7 @@ Due to time constrains, no unit tests or swagger docs were generated.
 
 Front-end was where I most spent time and effort on: the stack it uses is React, Chakra-Ui, Formik, tanstack's react query and react table.
 
-Managed to implement all required functions: Creating quote, visualizing tables of quotes and viewing the details of a quote.
+Managed to implement all required functions: Creating quote, visualizing tables of quotes and viewing the details of a quote. Also, login is implemented in a very basic way.
 Due to time constraints, I couldn't style all components.
 
 **Installing**
