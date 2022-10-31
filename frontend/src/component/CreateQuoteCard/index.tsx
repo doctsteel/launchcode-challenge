@@ -86,28 +86,34 @@ const CreateQuoteCard = () => {
           templateColumns="repeat(2,1fr)"
         >
           <GridItem>
-            <Field
-              as={Select}
-              id="departure_loc"
-              name="departure_loc"
-              placeholder="FROM"
-              value={formik.values.departure_loc}
-              onChange={formik.handleChange}
-            >
-              <SelectLocation />
-            </Field>
+            <FormControl>
+              <FormLabel>From</FormLabel>
+              <Field
+                as={Select}
+                id="departure_loc"
+                name="departure_loc"
+                placeholder="."
+                value={formik.values.departure_loc}
+                onChange={formik.handleChange}
+              >
+                <SelectLocation />
+              </Field>
+            </FormControl>
           </GridItem>
           <GridItem>
-            <Field
-              as={Select}
-              id="destination_loc"
-              name="destination_loc"
-              placeholder="DESTINATION"
-              value={formik.values.destination_loc}
-              onChange={formik.handleChange}
-            >
-              <SelectLocation />
-            </Field>
+            <FormControl>
+              <FormLabel>To</FormLabel>
+              <Field
+                as={Select}
+                id="destination_loc"
+                name="destination_loc"
+                placeholder="."
+                value={formik.values.destination_loc}
+                onChange={formik.handleChange}
+              >
+                <SelectLocation />
+              </Field>
+            </FormControl>
           </GridItem>
           <GridItem>
             <FormControl>
@@ -124,50 +130,66 @@ const CreateQuoteCard = () => {
             </FormControl>
           </GridItem>
           <GridItem>
-            <Field
-              as={Input}
-              placeholder="RETURN DATE"
-              id="return_date"
-              name="return_date"
-              type="date"
-              value={formik.values.return_date}
-              onChange={formik.handleChange}
-            />
+            <FormControl>
+              <FormLabel> Return Date</FormLabel>
+              <Field
+                as={Input}
+                placeholder="RETURN DATE"
+                id="return_date"
+                name="return_date"
+                type="date"
+                value={formik.values.return_date}
+                onChange={formik.handleChange}
+              />
+            </FormControl>
           </GridItem>
           <GridItem>
-            <Field
-              as={Input}
-              id="traveler_qty"
-              name="traveler_qty"
-              placeholder="QTY OF PEOPLE"
-              value={formik.values.traveler_qty}
-              onChange={formik.handleChange}
-            />
+            <FormControl>
+              <FormLabel> Quantity of people</FormLabel>
+              <Field
+                as={Input}
+                id="traveler_qty"
+                name="traveler_qty"
+                placeholder="."
+                value={formik.values.traveler_qty}
+                onChange={formik.handleChange}
+              />
+            </FormControl>
           </GridItem>
           <GridItem>
-            <Field
-              as={Select}
-              id="transportation"
-              name="transportation"
-              placeholder="TRANSPORTATION"
-              value={formik.values.transportation}
-              onChange={formik.handleChange}
-            >
-              <SelectTransportation />
-            </Field>
+            <FormControl>
+              <FormLabel> Transport method</FormLabel>
+              <Field
+                as={Select}
+                id="transportation"
+                name="transportation"
+                placeholder="."
+                value={formik.values.transportation}
+                onChange={formik.handleChange}
+              >
+                <SelectTransportation />
+              </Field>
+            </FormControl>
           </GridItem>
           <GridItem>
-            <Field
-              as={Input}
-              placeholder="CONTACT INFO"
-              id="contact_info"
-              name="contact_info"
-              value={formik.values.contact_info}
-              onChange={formik.handleChange}
-            />
+            <FormControl>
+              <FormLabel> Contact Info</FormLabel>
+
+              <Field
+                as={Input}
+                placeholder="CONTACT INFO"
+                id="contact_info"
+                name="contact_info"
+                value={formik.values.contact_info}
+                onChange={formik.handleChange}
+              />
+            </FormControl>
           </GridItem>
+
           <GridItem>
-            <Button type="submit">boom</Button>
+            <Button type="submit" size="lg" w={"100%"} h={"100%"}>
+              Submit
+            </Button>
           </GridItem>
         </Grid>
       </form>

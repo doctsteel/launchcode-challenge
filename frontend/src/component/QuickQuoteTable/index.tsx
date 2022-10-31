@@ -1,64 +1,36 @@
-import { useQuery, useQueryClient } from "@tanstack/react-query";
-import React, { useEffect, useMemo, useState } from "react";
-import QuotesService, { Quote } from "../../services/quotes.service";
+import { Button, Table, Tbody, Td, Th, Thead, Tr } from "@chakra-ui/react";
+import { useQuery } from "@tanstack/react-query";
 import {
   ColumnDef,
   flexRender,
   getCoreRowModel,
-  getPaginationRowModel,
-  PaginationState,
   useReactTable,
 } from "@tanstack/react-table";
-import { Button, Table, Tbody, Td, Th, Thead, Tr } from "@chakra-ui/react";
 import moment from "moment";
-import { SearchIcon } from "@chakra-ui/icons";
+import React, { useState } from "react";
+import QuotesService, { Quote } from "../../services/quotes.service";
 import QuoteDetailsModal from "../QuoteDetailsModal";
 
-type CustomQuoteTable = {
-  id: string;
-  departure_loc: string;
-  destination_loc: string;
-  departure_date: string;
-  return_date: string;
+type QuickQuoteTableType = {
+  contact_info: string;
   traveler_qty: number;
-  transportation: string;
   status: string;
   price: number;
   action: Quote;
 };
 
-const AllQuoteTable = () => {
+const QuickQuoteTable = () => {
   const quotesService = new QuotesService();
 
-  const columns_test = React.useMemo<ColumnDef<CustomQuoteTable, any>[]>(
+  const columns_test = React.useMemo<ColumnDef<QuickQuoteTableType, any>[]>(
     () => [
       {
-        header: "Id",
-        accessorKey: "id",
-      },
-      {
-        header: "From",
-        accessorKey: "departure_loc",
-      },
-      {
-        header: "To",
-        accessorKey: "destination_loc",
-      },
-      {
-        header: "Departure date",
-        accessorKey: "departure_date",
-      },
-      {
-        header: "Return date",
-        accessorKey: "return_date",
+        header: "Name/contact",
+        accessorKey: "contact_info",
       },
       {
         header: "Number of travelers",
         accessorKey: "traveler_qty",
-      },
-      {
-        header: "Transportation",
-        accessorKey: "transportation",
       },
       {
         header: "status",
@@ -77,17 +49,16 @@ const AllQuoteTable = () => {
     []
   );
 
-  const [pageSize, setPageSize] = useState(10);
-
+  const [pageSize, setPageSize] = useState(9);
   const [pageNum, setPageNum] = useState(0);
   const [maxPage, setMaxPage] = useState(0);
 
   const dataQuery = useQuery(
-    ["quotes", pageNum],
+    ["quickquotes", pageNum],
     async () => {
       const res = await quotesService.getQuoteList({
-        skip: 10 * pageNum,
-        take: 10,
+        skip: pageSize * pageNum,
+        take: pageSize,
       });
       setMaxPage(Math.ceil(res.rowCount / pageSize));
       return res;
@@ -95,13 +66,8 @@ const AllQuoteTable = () => {
     {
       select: (data) => ({
         rows: data.rows.map((quote: Quote) => ({
-          id: quote.id,
-          departure_loc: quote.departure_loc,
-          destination_loc: quote.destination_loc,
-          departure_date: moment(quote.departure_date).format("MM-DD-YYYY"),
-          return_date: moment(quote.return_date).format("MM-DD-YYYY"),
           traveler_qty: quote.traveler_qty,
-          transportation: quote.transportation,
+          contact_info: quote.contact_info,
           status: quote.status,
           price: quote.price,
           action: quote,
@@ -121,16 +87,19 @@ const AllQuoteTable = () => {
     getCoreRowModel: getCoreRowModel(),
     manualPagination: true,
   });
-
   return (
     <>
-      <Table>
+      <Table size="xs">
         <Thead>
           {table.getHeaderGroups().map((headerGroup) => (
             <Tr key={headerGroup.id}>
               {headerGroup.headers.map((header) => {
                 return (
-                  <Th key={header.id} colSpan={header.colSpan}>
+                  <Th
+                    key={header.id}
+                    colSpan={header.colSpan}
+                    fontSize={"x-small"}
+                  >
                     {
                       <div>
                         {flexRender(
@@ -151,7 +120,7 @@ const AllQuoteTable = () => {
               <Tr key={row.id}>
                 {row.getVisibleCells().map((cell) => {
                   return (
-                    <Td key={cell.id}>
+                    <Td key={cell.id} fontSize={"small"}>
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext()
@@ -170,6 +139,7 @@ const AllQuoteTable = () => {
           className="border rounded p-1"
           onClick={() => setPageNum((prevState) => prevState - 1)}
           disabled={pageNum < 1}
+          size="xs"
         >
           {"Previous"}
         </Button>
@@ -177,6 +147,7 @@ const AllQuoteTable = () => {
           className="border rounded p-1"
           onClick={() => setPageNum((prevState) => prevState + 1)}
           disabled={pageNum >= maxPage - 1}
+          size="xs"
         >
           {"Next"}
         </Button>
@@ -191,4 +162,4 @@ const AllQuoteTable = () => {
   );
 };
 
-export default AllQuoteTable;
+export default QuickQuoteTable;
